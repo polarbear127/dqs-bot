@@ -1,0 +1,10 @@
+{
+    "name": "DQS-bot",
+    "main": "main.js",
+    "ignore": [
+        "build"
+    ],
+    "packageName": "com.polarbear127.dqs",
+    "versionName": "1.0.0",
+    "versionCode": 1
+}
