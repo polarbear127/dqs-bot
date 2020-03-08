@@ -20,7 +20,7 @@ function autoTouch(img,pX,pY,pW,pH,likelihood) {
         randY = b.y+Math.round(Math.random() * 5);
         press(randX,randY,150); // click on (x,y) with random 5px offset
     }else{
-        toastLog("Not found");
+        toastLog("Not found"+img);
     }
     sleep(1000)
 }
@@ -49,8 +49,8 @@ while(true){
     'go.png',
     'get-result.png',
     'conti.png',
-    'ok'];
+    'ok.png'];
     for (i = 0; i < target_imgs.length; i++) {
-        autoTouch(target_imgs[i],0,0,width,height,0.8);
+        autoTouch(target_imgs[i],0,0,width,height,0.75);
     }
 }
