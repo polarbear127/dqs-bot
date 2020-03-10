@@ -3,13 +3,23 @@ description: bot for DQS
 version: 1.0.0
 authoer: hajimela (polarbear127)
 */
-
+function getScreen(){
+    // to avoid captureScreen failure
+    while(!tmpImg){var tmpImg = captureScreen();}
+    //save tmp captured screen
+    images.save(tmpImg,"/storage/emulated/0/tmp.png"); 
+}
 function autoTouch(img,pX,pY,pW,pH,likelihood) {
     // parameters
     var img_path = "./img/";
     var target = images.read(img_path+img);
-    while(!tmpImg){var tmpImg = captureScreen();} // to avoid captureScreen failure
-    images.save(tmpImg,"/storage/emulated/0/tmp.png"); //save tmp capture in grayscale
+    var height = device.height;
+    var width = device.width;
+    var ra = new RootAutomator();
+    // set screen resolution
+    //toastLog("Screen resolution width:" + width + ";height:" + height);
+    ra.setScreenMetrics(width,height);
+    getScreen();
     var screenShot = images.read("/storage/emulated/0/tmp.png");
     var b =findImage(screenShot,target,{
         region: [pX, pY, pW, pH],
@@ -18,27 +28,25 @@ function autoTouch(img,pX,pY,pW,pH,likelihood) {
     if(b){
         randX = b.x+Math.round(Math.random() * 5);
         randY = b.y+Math.round(Math.random() * 5);
-        press(randX,randY,150); // click on (x,y) with random 5px offset
-    }else{
-        toastLog("Not found"+img);
+        ra.press(randX,randY,150); // click on (x,y) with random 5px offset
     }
-    sleep(1000)
+    sleep(500)
 }
 
-function storyMode(){
+function story(){
+
+}
+
+function teamRaid(){
 
 }
 
 // check screen capture (paramter = true if the screnn to be the landscape)
 if(!requestScreenCapture()){toast("Failed to capture screen");exit();}
 
-// loop
-var height = device.height;
-var width = device.width;
-
-toastLog("Screen resolution width:" + width + ";height:" + height);
-
 while(true){
+    var height = device.height;
+    var width = device.width;
     var target_imgs = ['main-story-new-spot.png',
     'side-story-new-spot.png',
     'new-stage-on-map.png',
@@ -51,6 +59,6 @@ while(true){
     'conti.png',
     'ok.png'];
     for (i = 0; i < target_imgs.length; i++) {
-        autoTouch(target_imgs[i],0,0,width,height,0.75);
+        autoTouch(target_imgs[i],0,0,width,height,0.8);
     }
 }
